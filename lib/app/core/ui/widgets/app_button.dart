@@ -30,11 +30,13 @@ class AppButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: loading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor ?? AppColors.primary,
-          foregroundColor: textColor ?? AppColors.onPrimary,
-          disabledBackgroundColor: (backgroundColor ?? AppColors.primary).withValues(alpha: 0.6),
+          backgroundColor: backgroundColor ?? AppColors.black,
+          foregroundColor: textColor ?? AppColors.white,
+          disabledBackgroundColor: (backgroundColor ?? AppColors.black).withValues(alpha: 0.6),
+          elevation: 4,
+          shadowColor: AppColors.black.withValues(alpha: 0.3),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(28),
           ),
         ),
         child: loading
@@ -49,7 +51,9 @@ class AppButton extends StatelessWidget {
             : Text(
                 label,
                 style: AppTextStyles.button.copyWith(
-                  color: textColor ?? AppColors.onPrimary,
+                  color: textColor ?? AppColors.white,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2,
                 ),
               ),
       ),

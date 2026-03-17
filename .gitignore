@@ -48,3 +48,4 @@ app.*.map.json
 .agent/
 .docs/   
 .ia/
+mcp-proxy.js
