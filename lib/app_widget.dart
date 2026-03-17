@@ -4,6 +4,9 @@ import 'app/core/auth/auth_cubit.dart';
 import 'app/core/cubit/connectivity/connectivity_cubit.dart';
 import 'app/core/cubit/theme/theme_cubit.dart';
 import 'app/core/di/injection.dart';
+import 'app/core/router/app_router.dart';
+import 'app/core/ui/theme_config.dart';
+import 'app/core/config/app_config.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
@@ -26,6 +29,15 @@ class _MaterialAppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox.shrink();
+    final themeMode = context.watch<ThemeCubit>().state;
+
+    return MaterialApp.router(
+      title: AppConfig.title,
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.theme,
+      darkTheme: AppTheme.theme,
+      themeMode: themeMode,
+      routerConfig: appRouter,
+    );
   }
 }
