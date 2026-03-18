@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:projeto_integrador_03/app/core/ui/app_colors.dart';
 import 'package:projeto_integrador_03/app/core/ui/widgets/app_button.dart';
 import 'package:projeto_integrador_03/app/core/utils/responsive_context.dart';
@@ -126,7 +127,7 @@ class HomePage extends StatelessWidget {
                     Expanded(
                       child: AppButton(
                         label: 'Check List',
-                        onPressed: () {},
+                        onPressed: () => context.push('/machine-selection'),
                         height: buttonHeight,
                         borderRadius: borderRadius,
                       ),

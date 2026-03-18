@@ -6,6 +6,7 @@ import 'package:projeto_integrador_03/app/presentation/splash/splash_page.dart';
 import 'package:projeto_integrador_03/app/presentation/auth/login/login_page.dart';
 import 'package:projeto_integrador_03/app/presentation/home/home_page.dart';
 import 'package:projeto_integrador_03/app/presentation/operator_selection/operator_selection_page.dart';
+import 'package:projeto_integrador_03/app/presentation/machine_selection/machine_selection_page.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -19,5 +20,6 @@ final appRouter = GoRouter(
     GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
     GoRoute(path: '/operator-selection', builder: (context, state) => const OperatorSelectionPage()),
     GoRoute(path: '/', builder: (context, state) => const HomePage()),
+    GoRoute(path: '/machine-selection', builder: (context, state) => const MachineSelectionPage()),
   ],
 );
