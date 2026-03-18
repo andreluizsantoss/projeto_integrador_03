@@ -138,11 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                     Expanded(
                       child: AppButton(
                         label: 'Continuar',
-                        onPressed: () {
-                          if (_pin.length >= 4) {
-                            context.pushReplacement('/');
-                          }
-                        },
+                        onPressed: () => context.pushReplacement('/'),
                         height: buttonHeight,
                       ),
                     ),
