@@ -104,51 +104,51 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Montserrat
+    - family: Inter
       fonts:
-        - asset: assets/font/Montserrat-Thin.ttf
+        - asset: assets/font/Inter_24pt-Thin.ttf
           weight: 100
-        - asset: assets/font/Montserrat-ThinItalic.ttf
+        - asset: assets/font/Inter_24pt-ThinItalic.ttf
           style: italic
           weight: 100
-        - asset: assets/font/Montserrat-ExtraLight.ttf
+        - asset: assets/font/Inter_24pt-ExtraLight.ttf
           weight: 200
-        - asset: assets/font/Montserrat-ExtraLightItalic.ttf
+        - asset: assets/font/Inter_24pt-ExtraLightItalic.ttf
           style: italic
           weight: 200
-        - asset: assets/font/Montserrat-Light.ttf
+        - asset: assets/font/Inter_24pt-Light.ttf
           weight: 300
-        - asset: assets/font/Montserrat-LightItalic.ttf
+        - asset: assets/font/Inter_24pt-LightItalic.ttf
           style: italic
           weight: 300
-        - asset: assets/font/Montserrat-Regular.ttf
+        - asset: assets/font/Inter_24pt-Regular.ttf
           weight: 400
-        - asset: assets/font/Montserrat-Italic.ttf
+        - asset: assets/font/Inter_24pt-Italic.ttf
           style: italic
           weight: 400
-        - asset: assets/font/Montserrat-Medium.ttf
+        - asset: assets/font/Inter_24pt-Medium.ttf
           weight: 500
-        - asset: assets/font/Montserrat-MediumItalic.ttf
+        - asset: assets/font/Inter_24pt-MediumItalic.ttf
           style: italic
           weight: 500
-        - asset: assets/font/Montserrat-SemiBold.ttf
+        - asset: assets/font/Inter_24pt-SemiBold.ttf
           weight: 600
-        - asset: assets/font/Montserrat-SemiBoldItalic.ttf
+        - asset: assets/font/Inter_24pt-SemiBoldItalic.ttf
           style: italic
           weight: 600
-        - asset: assets/font/Montserrat-Bold.ttf
+        - asset: assets/font/Inter_24pt-Bold.ttf
           weight: 700
-        - asset: assets/font/Montserrat-BoldItalic.ttf
+        - asset: assets/font/Inter_24pt-BoldItalic.ttf
           style: italic
           weight: 700
-        - asset: assets/font/Montserrat-ExtraBold.ttf
+        - asset: assets/font/Inter_24pt-ExtraBold.ttf
           weight: 800
-        - asset: assets/font/Montserrat-ExtraBoldItalic.ttf
+        - asset: assets/font/Inter_24pt-ExtraBoldItalic.ttf
           style: italic
           weight: 800
-        - asset: assets/font/Montserrat-Black.ttf
+        - asset: assets/font/Inter_24pt-Black.ttf
           weight: 900
-        - asset: assets/font/Montserrat-BlackItalic.ttf
+        - asset: assets/font/Inter_24pt-BlackItalic.ttf
           style: italic
           weight: 900
   #
