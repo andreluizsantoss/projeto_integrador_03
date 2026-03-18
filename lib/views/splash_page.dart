@@ -5,8 +5,21 @@ import 'package:projeto_integrador_03/core/app_text_styles.dart';
 import 'package:projeto_integrador_03/views/widgets/app_button.dart';
 import 'package:projeto_integrador_03/core/responsive_context.dart';
 
-class SplashPage extends StatelessWidget {
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    super.initState();
+    FlutterNativeSplash.remove();
+  }
 
   @override
   Widget build(BuildContext context) {
