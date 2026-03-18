@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projeto_integrador_03/app/core/ui/app_colors.dart';
 import 'package:projeto_integrador_03/app/core/ui/widgets/app_button.dart';
+import 'package:projeto_integrador_03/app/core/utils/responsive_context.dart';
 import 'package:projeto_integrador_03/app/presentation/operator_selection/widgets/operator_card.dart';
 
 class OperatorSelectionPage extends StatelessWidget {
@@ -9,6 +10,21 @@ class OperatorSelectionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final paddingHorizontal = context.responsiveValue<double>(
+      mobile: 24.0,
+      tablet: 60.0,
+    );
+
+    final titleFontSize = context.responsiveValue<double>(
+      mobile: 28.0,
+      tablet: 36.0,
+    );
+
+    final buttonHeight = context.responsiveValue<double>(
+      mobile: 56.0,
+      tablet: 64.0,
+    );
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -18,23 +34,26 @@ class OperatorSelectionPage extends StatelessWidget {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+            padding: EdgeInsets.symmetric(
+              horizontal: paddingHorizontal,
+              vertical: context.responsiveValue<double>(mobile: 16.0, tablet: 32.0),
+            ),
             child: Column(
               children: [
-                const SizedBox(height: 10),
-                // Título conforme imagem
-                const Text(
+                SizedBox(height: context.responsiveValue<double>(mobile: 10, tablet: 20)),
+                // Título responsivo
+                Text(
                   'Selecione o Operador',
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 28,
+                    fontSize: titleFontSize,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: context.responsiveValue<double>(mobile: 16, tablet: 32)),
                 // Container com borda preta
                 Expanded(
                   child: Container(
@@ -46,75 +65,59 @@ class OperatorSelectionPage extends StatelessWidget {
                     child: ListView(
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 8),
-                      // ... (restante dos cards)
                       children: [
                         OperatorCard(
                           label: 'Label text',
-                          icon: Icons.stars_rounded,
-                          iconColor: Colors.black54,
                           onTap: () {},
                         ),
                         OperatorCard(
                           label: 'Label text',
-                          icon: Icons.stars_rounded,
-                          iconColor: Colors.black54,
                           onTap: () {},
                         ),
                         OperatorCard(
                           label: 'Label text',
-                          icon: Icons.stars_rounded,
-                          iconColor: Colors.black54,
                           onTap: () {},
                         ),
                         OperatorCard(
                           label: 'Label text',
-                          icon: Icons.stars_rounded,
-                          iconColor: Colors.black54,
                           onTap: () {},
                         ),
                         OperatorCard(
                           label: 'Label text',
-                          icon: Icons.stars_rounded,
-                          iconColor: Colors.black54,
                           onTap: () {},
                         ),
                         OperatorCard(
                           label: 'Label text',
-                          icon: Icons.stars_rounded,
-                          iconColor: Colors.black54,
                           onTap: () {},
                         ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
-                // Botões de ação
+                SizedBox(height: context.responsiveValue<double>(mobile: 24, tablet: 40)),
+                // Botões de ação responsivos
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Botão Cancelar (Agora usando AppButton reutilizável)
                     Expanded(
                       child: AppButton(
                         label: 'Cancelar',
                         backgroundColor: const Color(0xFFF28B82),
                         onPressed: () => context.pop(),
-                        height: 56,
+                        height: buttonHeight,
                       ),
                     ),
-                    const SizedBox(width: 20),
-                    // Botão Continuar (Preto - Estilo Premium do projeto)
+                    SizedBox(width: context.responsiveValue<double>(mobile: 20, tablet: 40)),
                     Expanded(
                       child: AppButton(
                         label: 'Continuar',
                         onPressed: () {},
-                        width: double.infinity,
-                        height: 56,
+                        height: buttonHeight,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: context.responsiveValue<double>(mobile: 8, tablet: 16)),
               ],
             ),
           ),

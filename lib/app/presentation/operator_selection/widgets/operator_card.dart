@@ -1,41 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_integrador_03/app/core/utils/responsive_context.dart';
 
 class OperatorCard extends StatelessWidget {
   final String label;
-  final IconData icon;
   final VoidCallback onTap;
-  final Color iconColor;
 
   const OperatorCard({
     super.key,
     required this.label,
-    required this.icon,
     required this.onTap,
-    this.iconColor = Colors.black87,
   });
 
   @override
   Widget build(BuildContext context) {
+    final fontSize = context.responsiveValue<double>(
+      mobile: 18.0,
+      tablet: 24.0,
+    );
+
+    final iconSize = context.responsiveValue<double>(
+      mobile: 24.0,
+      tablet: 32.0,
+    );
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+          padding: EdgeInsets.symmetric(
+            vertical: context.responsiveValue<double>(mobile: 10.0, tablet: 16.0),
+            horizontal: 16.0,
+          ),
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.stars,
-                size: 24,
+                size: iconSize,
                 color: Colors.black54,
               ),
               const SizedBox(width: 16),
               Expanded(
                 child: Text(
                   label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18,
+                    fontSize: fontSize,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -49,9 +59,9 @@ class OperatorCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              const Icon(
+              Icon(
                 Icons.play_arrow_rounded,
-                size: 16,
+                size: iconSize * 0.7,
                 color: Colors.black26,
               ),
             ],
