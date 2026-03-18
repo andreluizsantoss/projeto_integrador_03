@@ -41,7 +41,6 @@ class OperatorSelectionPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: context.responsiveValue<double>(mobile: 10, tablet: 20)),
-                // Título responsivo
                 Text(
                   'Selecione o Operador',
                   textAlign: TextAlign.center,
@@ -54,7 +53,6 @@ class OperatorSelectionPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: context.responsiveValue<double>(mobile: 16, tablet: 32)),
-                // Container com borda preta
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
@@ -67,37 +65,23 @@ class OperatorSelectionPage extends StatelessWidget {
                           vertical: 8, horizontal: 8),
                       children: [
                         OperatorCard(
-                          label: 'Label text',
-                          onTap: () {},
+                          label: 'João Silva',
+                          onTap: () => context.push('/login'),
                         ),
                         OperatorCard(
-                          label: 'Label text',
-                          onTap: () {},
+                          label: 'Maria Oliveira',
+                          onTap: () => context.push('/login'),
                         ),
                         OperatorCard(
-                          label: 'Label text',
-                          onTap: () {},
-                        ),
-                        OperatorCard(
-                          label: 'Label text',
-                          onTap: () {},
-                        ),
-                        OperatorCard(
-                          label: 'Label text',
-                          onTap: () {},
-                        ),
-                        OperatorCard(
-                          label: 'Label text',
-                          onTap: () {},
+                          label: 'Pedro Santos',
+                          onTap: () => context.push('/login'),
                         ),
                       ],
                     ),
                   ),
                 ),
                 SizedBox(height: context.responsiveValue<double>(mobile: 24, tablet: 40)),
-                // Botões de ação responsivos
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: AppButton(
@@ -111,7 +95,7 @@ class OperatorSelectionPage extends StatelessWidget {
                     Expanded(
                       child: AppButton(
                         label: 'Continuar',
-                        onPressed: () {},
+                        onPressed: () => context.push('/login'),
                         height: buttonHeight,
                       ),
                     ),
