@@ -49,7 +49,7 @@ class SplashPage extends StatelessWidget {
                 label: 'Acessar',
                 width: context.responsiveValue(mobile: 180, tablet: 280),
                 height: context.responsiveValue(mobile: 56, tablet: 80),
-                onPressed: () => context.push('/login'),
+                onPressed: () => context.push('/operator-selection'),
               ),
             ],
           ),

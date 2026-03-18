@@ -10,6 +10,8 @@ class AppButton extends StatelessWidget {
   final double height;
   final Color? backgroundColor;
   final Color? textColor;
+  final LinearGradient? gradient;
+  final double borderRadius;
 
   const AppButton({
     super.key,
@@ -20,6 +22,8 @@ class AppButton extends StatelessWidget {
     this.height = 50,
     this.backgroundColor,
     this.textColor,
+    this.gradient,
+    this.borderRadius = 16,
   });
 
   @override
@@ -30,18 +34,23 @@ class AppButton extends StatelessWidget {
       width: width ?? double.infinity,
       height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(borderRadius),
         gradient: isEnabled
-            ? const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF424242), // Grey 800
-                  Colors.black,
-                ],
-              )
+            ? (gradient ??
+                (backgroundColor == null
+                    ? const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xFF424242), // Grey 800
+                          Colors.black,
+                        ],
+                      )
+                    : null))
             : null,
-        color: isEnabled ? null : AppColors.black.withValues(alpha: 0.6),
+        color: isEnabled
+            ? (gradient == null ? backgroundColor : null)
+            : AppColors.black.withValues(alpha: 0.6),
         boxShadow: isEnabled
             ? [
                 BoxShadow(
@@ -57,7 +66,7 @@ class AppButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: isEnabled ? onPressed : null,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(borderRadius),
           child: Center(
             child: loading
                 ? const SizedBox(
@@ -72,7 +81,7 @@ class AppButton extends StatelessWidget {
                     label,
                     style: AppTextStyles.button.copyWith(
                       color: textColor ?? AppColors.white,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
                       fontSize: 18,
                       letterSpacing: 0,
                     ),
