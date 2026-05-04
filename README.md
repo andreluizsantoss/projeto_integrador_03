@@ -378,19 +378,21 @@ flutter run -d emulator-5554 --dart-define-from-file=.env
 
 ## Como Rodar — Modo PROD (Release)
 
-Antes de gerar o release, ajuste o `.env` para apontar para a URL de produção:
+As variáveis de ambiente são passadas diretamente via `--dart-define` no momento do build:
 
-```dotenv
-API_BASE_URL=https://api-producao.onrender.com
-FLAVOR=prod
-```
+| Variável | Descrição |
+|----------|-----------|
+| `BASE_URL` | URL completa da API REST (sem barra no final) |
+| `PORT` | Porta do servidor da API |
 
 ### APK de release (distribuição direta)
 
 Gera um único APK universal que roda em qualquer dispositivo Android:
 
 ```bash
-flutter build apk --release --dart-define-from-file=.env
+flutter build apk --release \
+  --dart-define="BASE_URL=https://sua-api.example.com" \
+  --dart-define="PORT=3000"
 ```
 
 Arquivo gerado em:
@@ -403,7 +405,9 @@ build/app/outputs/flutter-apk/app-release.apk
 Gera três APKs, cada um otimizado para um tipo de processador:
 
 ```bash
-flutter build apk --split-per-abi --release --dart-define-from-file=.env
+flutter build apk --split-per-abi --release \
+  --dart-define="BASE_URL=https://sua-api.example.com" \
+  --dart-define="PORT=3000"
 ```
 
 ```
@@ -418,7 +422,9 @@ Distribua o `.apk` correto para cada dispositivo. Se não souber a arquitetura, 
 ### App Bundle (para publicar na Google Play Store)
 
 ```bash
-flutter build appbundle --release --dart-define-from-file=.env
+flutter build appbundle --release \
+  --dart-define="BASE_URL=https://sua-api.example.com" \
+  --dart-define="PORT=3000"
 ```
 
 O Google Play distribui automaticamente o binário correto para cada dispositivo.
@@ -426,16 +432,15 @@ O Google Play distribui automaticamente o binário correto para cada dispositivo
 ### APK de debug (testes rápidos sem assinatura)
 
 ```bash
-flutter build apk --debug --dart-define-from-file=.env
+flutter build apk --debug \
+  --dart-define="BASE_URL=https://sua-api.example.com" \
+  --dart-define="PORT=3000"
 ```
 
 ### Instalar o APK diretamente no dispositivo via USB
 
 ```bash
 adb install build/app/outputs/flutter-apk/app-release.apk
-
-# Ou usando o próprio Flutter:
-flutter install --dart-define-from-file=.env
 ```
 
 ---
