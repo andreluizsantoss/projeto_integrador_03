@@ -5,11 +5,7 @@ class ActivityTile extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
 
-  const ActivityTile({
-    super.key,
-    required this.label,
-    required this.onTap,
-  });
+  const ActivityTile({super.key, required this.label, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +30,15 @@ class ActivityTile extends StatelessWidget {
         onTap: onTap,
         child: Padding(
           padding: EdgeInsets.symmetric(
-            vertical: context.responsiveValue<double>(mobile: 12.0, tablet: 24.0),
+            vertical: context.responsiveValue<double>(
+              mobile: 12.0,
+              tablet: 24.0,
+            ),
             horizontal: 16.0,
           ),
           child: Row(
             children: [
-              Icon(
-                Icons.stars,
-                size: iconSize,
-                color: Colors.black54,
-              ),
+              Icon(Icons.stars, size: iconSize, color: Colors.black54),
               const SizedBox(width: 16),
               Expanded(
                 child: Text(

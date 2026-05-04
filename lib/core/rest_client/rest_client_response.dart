@@ -3,11 +3,7 @@ class RestClientResponse<T> {
   final int? statusCode;
   final String? statusMessage;
 
-  RestClientResponse({
-    this.data,
-    this.statusCode,
-    this.statusMessage,
-  });
+  RestClientResponse({this.data, this.statusCode, this.statusMessage});
 
   @override
   String toString() {

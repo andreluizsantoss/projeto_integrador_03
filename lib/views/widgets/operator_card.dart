@@ -5,11 +5,7 @@ class OperatorCard extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
 
-  const OperatorCard({
-    super.key,
-    required this.label,
-    required this.onTap,
-  });
+  const OperatorCard({super.key, required this.label, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +25,15 @@ class OperatorCard extends StatelessWidget {
         onTap: onTap,
         child: Padding(
           padding: EdgeInsets.symmetric(
-            vertical: context.responsiveValue<double>(mobile: 10.0, tablet: 16.0),
+            vertical: context.responsiveValue<double>(
+              mobile: 10.0,
+              tablet: 16.0,
+            ),
             horizontal: 16.0,
           ),
           child: Row(
             children: [
-              Icon(
-                Icons.stars,
-                size: iconSize,
-                color: Colors.black54,
-              ),
+              Icon(Icons.stars, size: iconSize, color: Colors.black54),
               const SizedBox(width: 16),
               Expanded(
                 child: Text(
@@ -50,11 +45,14 @@ class OperatorCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const Text(
+              Text(
                 '⌘C',
                 style: TextStyle(
                   color: Colors.black26,
-                  fontSize: 14,
+                  fontSize: context.responsiveValue<double>(
+                    mobile: 12.0,
+                    tablet: 16.0,
+                  ),
                   fontWeight: FontWeight.w400,
                 ),
               ),

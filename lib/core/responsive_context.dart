@@ -17,7 +17,8 @@ extension ResponsiveContext on BuildContext {
   bool get isMobile => screenWidth < _mobileBreakpoint;
 
   /// Identifica se o dispositivo é Tablet
-  bool get isTablet => screenWidth >= _mobileBreakpoint && screenWidth < _tabletBreakpoint;
+  bool get isTablet =>
+      screenWidth >= _mobileBreakpoint && screenWidth < _tabletBreakpoint;
 
   /// Identifica se o dispositivo é Desktop / Laptop
   bool get isDesktop => screenWidth >= _tabletBreakpoint;
@@ -32,11 +33,7 @@ extension ResponsiveContext on BuildContext {
   }
 
   /// Retorna um valor baseado no tamanho da tela
-  T responsiveValue<T>({
-    required T mobile,
-    required T tablet,
-    T? desktop,
-  }) {
+  T responsiveValue<T>({required T mobile, required T tablet, T? desktop}) {
     if (isMobile) return mobile;
     if (isTablet) return tablet;
     return desktop ?? tablet;

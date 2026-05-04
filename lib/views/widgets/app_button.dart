@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_03/core/app_colors.dart';
 import 'package:projeto_integrador_03/core/app_text_styles.dart';
+import 'package:projeto_integrador_03/core/responsive_context.dart';
 
 class AppButton extends StatelessWidget {
   final String label;
@@ -37,16 +38,16 @@ class AppButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
         gradient: isEnabled
             ? (gradient ??
-                (backgroundColor == null
-                    ? const LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xFF424242), // Grey 800
-                          Colors.black,
-                        ],
-                      )
-                    : null))
+                  (backgroundColor == null
+                      ? const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xFF424242), // Grey 800
+                            Colors.black,
+                          ],
+                        )
+                      : null))
             : null,
         color: isEnabled
             ? (gradient == null ? backgroundColor : null)
@@ -79,10 +80,15 @@ class AppButton extends StatelessWidget {
                   )
                 : Text(
                     label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.button.copyWith(
                       color: textColor ?? AppColors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: context.responsiveValue<double>(
+                        mobile: 16.0,
+                        tablet: 20.0,
+                      ),
                       letterSpacing: 0,
                     ),
                   ),

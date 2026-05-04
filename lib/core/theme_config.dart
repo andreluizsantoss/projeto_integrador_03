@@ -18,7 +18,7 @@ sealed class AppTheme {
       onError: AppColors.onError,
     ),
     scaffoldBackgroundColor: AppColors.background,
-    
+
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.background,
       elevation: 0,
@@ -26,19 +26,17 @@ sealed class AppTheme {
       titleTextStyle: AppTextStyles.h3,
       iconTheme: IconThemeData(color: AppColors.onBackground),
     ),
-    
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.onPrimary,
         textStyle: AppTextStyles.button,
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     ),
-    
+
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.surface,
@@ -59,7 +57,9 @@ sealed class AppTheme {
         borderSide: const BorderSide(color: AppColors.error),
       ),
       labelStyle: AppTextStyles.bodyMedium,
-      floatingLabelStyle: AppTextStyles.labelLarge.copyWith(color: AppColors.primary),
+      floatingLabelStyle: AppTextStyles.labelLarge.copyWith(
+        color: AppColors.primary,
+      ),
     ),
   );
 }

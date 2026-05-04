@@ -46,6 +46,15 @@ app.*.map.json
 
 # Documents
 .agent/
-.docs/   
+.docs/
 .ia/
 mcp-proxy.js
+.gemini/
+.claude/
+CLAUDE.md
+GEMINI.md
+AI_CONTEXT_HANDOFF.md
+API_CONTRACT.md
+
+# Variáveis de ambiente (contém segredos — nunca commitar)
+.env

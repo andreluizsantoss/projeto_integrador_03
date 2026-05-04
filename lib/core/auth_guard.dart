@@ -9,22 +9,30 @@ class AuthGuard {
 
   AuthGuard(this._authCubit);
 
+  static const _publicRoutes = {'/splash', '/operator-selection', '/login'};
+
   FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
     final authState = _authCubit.state;
-    final bool isLoggingIn = state.matchedLocation == '/login';
+    final location = state.matchedLocation;
+    final isPublic = _publicRoutes.contains(location);
 
-    if (authState.status == AuthStatus.unauthenticated) {
-      // Se não estiver autenticado e não estiver na tela de login, manda para o login
-      return isLoggingIn ? null : '/login';
+    if (authState.status == AuthStatus.unknown ||
+        authState.status == AuthStatus.loading) {
+      return null;
+    }
+
+    if (authState.status == AuthStatus.unauthenticated ||
+        authState.status == AuthStatus.error) {
+      return isPublic ? null : '/operator-selection';
     }
 
     if (authState.status == AuthStatus.authenticated) {
-      // Se estiver autenticado e tentar ir para o login, manda para a home
-      return isLoggingIn ? '/' : null;
+      if (location == '/login' || location == '/operator-selection') {
+        return '/';
+      }
+      return null;
     }
 
-    // Se o status for unknown (ex: carregando sessão), podemos retornar null
-    // e deixar uma Splash mostrar um loading (definido na rota de Splash)
     return null;
   }
 }
