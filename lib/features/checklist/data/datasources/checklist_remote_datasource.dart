@@ -1,5 +1,6 @@
 import 'package:projeto_integrador_03/core/rest_client/rest_client.dart';
 import '../models/checklist_model.dart';
+import '../models/checklist_detail_model.dart';
 import '../../domain/repositories/checklist_repository.dart';
 
 abstract interface class ChecklistRemoteDataSource {
@@ -12,6 +13,8 @@ abstract interface class ChecklistRemoteDataSource {
     required int checklistId,
     required List<AnswerInput> answers,
   });
+
+  Future<ChecklistDetailModel> fetchById(int checklistId);
 }
 
 class ChecklistRemoteDataSourceImpl implements ChecklistRemoteDataSource {
@@ -50,5 +53,13 @@ class ChecklistRemoteDataSourceImpl implements ChecklistRemoteDataSource {
             .toList(),
       },
     );
+  }
+
+  @override
+  Future<ChecklistDetailModel> fetchById(int checklistId) async {
+    final response = await _client.get<Map<String, dynamic>>(
+      '/checklists/$checklistId',
+    );
+    return ChecklistDetailModel.fromJson(response.data!);
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projeto_integrador_03/core/auth_guard.dart';
 import 'package:projeto_integrador_03/core/injection.dart';
+import 'package:projeto_integrador_03/features/checklist/presentation/cubit/checklist_detail_cubit.dart';
+import 'package:projeto_integrador_03/features/checklist/presentation/pages/checklist_detail_page.dart';
 import 'package:projeto_integrador_03/views/splash_page.dart';
 import 'package:projeto_integrador_03/views/login_page.dart';
 import 'package:projeto_integrador_03/views/home_page.dart';
@@ -51,6 +54,16 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/checklist/resumo',
       builder: (context, state) => const ChecklistSummaryPage(),
+    ),
+    GoRoute(
+      path: '/checklist/detalhe/:id',
+      builder: (context, state) {
+        final id = int.parse(state.pathParameters['id']!);
+        return BlocProvider(
+          create: (_) => getIt<ChecklistDetailCubit>()..fetchById(id),
+          child: const ChecklistDetailPage(),
+        );
+      },
     ),
   ],
 );

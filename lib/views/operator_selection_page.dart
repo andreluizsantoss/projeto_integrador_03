@@ -177,9 +177,11 @@ class _OperatorSelectionPageState extends State<OperatorSelectionPage> {
         children: state.operators.map((op) {
           final isSelected = selected?.operatorId == op.operatorId;
           return Container(
-            color: isSelected
-                ? AppColors.secondary.withValues(alpha: 0.25)
-                : Colors.transparent,
+            margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(
+              color: isSelected ? Colors.white : Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+            ),
             child: OperatorCard(
               label: op.nome,
               onTap: () => context.read<OperatorCubit>().select(op),

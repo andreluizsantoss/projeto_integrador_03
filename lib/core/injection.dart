@@ -27,6 +27,7 @@ import 'package:projeto_integrador_03/features/machines/presentation/cubit/machi
 import 'package:projeto_integrador_03/features/operators/data/datasources/operator_remote_datasource.dart';
 import 'package:projeto_integrador_03/features/operators/data/repositories/operator_repository_impl.dart';
 import 'package:projeto_integrador_03/features/operators/domain/repositories/operator_repository.dart';
+import 'package:projeto_integrador_03/features/checklist/presentation/cubit/checklist_detail_cubit.dart';
 import 'package:projeto_integrador_03/features/operators/presentation/cubit/operator_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -98,6 +99,9 @@ void setupDependencies() {
   );
   getIt.registerLazySingleton<HistoryCubit>(
     () => HistoryCubit(getIt<HistoryRepository>()),
+  );
+  getIt.registerFactory<ChecklistDetailCubit>(
+    () => ChecklistDetailCubit(getIt<ChecklistRepository>()),
   );
 
   // ── Auth Guard ───────────────────────────────────────────────────────────────

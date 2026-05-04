@@ -1,4 +1,5 @@
 import '../entities/checklist_entity.dart';
+import '../entities/checklist_detail_entity.dart';
 
 class AnswerInput {
   final int itemId;
@@ -18,4 +19,6 @@ abstract interface class ChecklistRepository {
     required int checklistId,
     required List<AnswerInput> answers,
   });
+
+  Future<ChecklistDetailEntity> getDetail(int checklistId);
 }

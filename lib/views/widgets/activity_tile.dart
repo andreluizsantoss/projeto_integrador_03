@@ -28,6 +28,8 @@ class ActivityTile extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
+        splashColor: Colors.white38,
+        highlightColor: Colors.white24,
         child: Padding(
           padding: EdgeInsets.symmetric(
             vertical: context.responsiveValue<double>(

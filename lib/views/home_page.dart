@@ -272,7 +272,7 @@ class _HomePageState extends State<HomePage> {
         return ActivityTile(
           label:
               '${h.machineName} — ${h.operatorName} — ${_formatDate(h.data)}',
-          onTap: () {},
+          onTap: () => context.push('/checklist/detalhe/${h.checklistId}'),
         );
       },
     );

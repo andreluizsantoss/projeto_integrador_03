@@ -1,5 +1,6 @@
 import '../datasources/checklist_remote_datasource.dart';
 import '../../domain/entities/checklist_entity.dart';
+import '../../domain/entities/checklist_detail_entity.dart';
 import '../../domain/repositories/checklist_repository.dart';
 
 class ChecklistRepositoryImpl implements ChecklistRepository {
@@ -24,4 +25,10 @@ class ChecklistRepositoryImpl implements ChecklistRepository {
     required int checklistId,
     required List<AnswerInput> answers,
   }) => _dataSource.saveAnswers(checklistId: checklistId, answers: answers);
+
+  @override
+  Future<ChecklistDetailEntity> getDetail(int checklistId) async {
+    final model = await _dataSource.fetchById(checklistId);
+    return model.toEntity();
+  }
 }

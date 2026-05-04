@@ -192,9 +192,11 @@ class _MachineSelectionPageState extends State<MachineSelectionPage> {
           final machine = state.machines[index];
           final isSelected = selected?.machineId == machine.machineId;
           return Container(
-            color: isSelected
-                ? AppColors.secondary.withValues(alpha: 0.25)
-                : Colors.transparent,
+            margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(
+              color: isSelected ? Colors.white : Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+            ),
             child: ActivityTile(
               label: machine.machineName,
               onTap: () => context.read<MachineCubit>().select(machine),
