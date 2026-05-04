@@ -15,24 +15,29 @@ Aplicativo Android para registro de inspeção pré-operacional de máquinas/equ
 | Checklist — Motor & Estrutura | Condições mecânicas e estruturais |
 | Checklist — Elétrica & Funcionamento | Sistema elétrico e operação geral |
 | Resumo | Revisão consolidada e envio ao servidor |
+| Detalhes do Checklist | Visualização completa de um checklist já realizado, acessado pelo histórico |
 
 ---
 
 ## Fluxo de Navegação
 
 ```
-/operators  →  /login  →  /machine-selection
-                               │
-                               ▼
-                    /checklist/combustivel
-                               │
-                    /checklist/seguranca
-                               │
-                    /checklist/motor-estrutura
-                               │
-                    /checklist/eletrica-funcionamento
-                               │
-                    /checklist/resumo  →  / (home)
+/operator-selection  →  /login  →  /machine-selection
+                                          │
+                                          ▼
+                               /checklist/combustivel
+                                          │
+                               /checklist/seguranca
+                                          │
+                               /checklist/motor-estrutura
+                                          │
+                               /checklist/eletrica-funcionamento
+                                          │
+                               /checklist/resumo  →  / (home)
+                                                          │
+                                          ┌───────────────┘
+                                          ▼
+                               /checklist/detalhe/:id   ← toque em item do histórico
 ```
 
 ---
@@ -90,10 +95,35 @@ lib/
 │   ├── checklist_cubit.dart / checklist_state.dart
 │   └── connectivity_cubit.dart
 ├── features/
+│   ├── checklist/
+│   │   ├── data/
+│   │   │   ├── datasources/
+│   │   │   │   └── checklist_remote_datasource.dart  # create, saveAnswers, fetchById
+│   │   │   ├── models/
+│   │   │   │   ├── checklist_model.dart
+│   │   │   │   └── checklist_detail_model.dart       # DTO do GET /checklists/{id}
+│   │   │   └── repositories/
+│   │   │       └── checklist_repository_impl.dart
+│   │   ├── domain/
+│   │   │   ├── entities/
+│   │   │   │   ├── checklist_entity.dart
+│   │   │   │   └── checklist_detail_entity.dart      # ChecklistDetailEntity + ChecklistAnswerEntity
+│   │   │   └── repositories/
+│   │   │       └── checklist_repository.dart
+│   │   └── presentation/
+│   │       ├── cubit/
+│   │       │   ├── checklist_detail_cubit.dart       # fetchById(id)
+│   │       │   └── checklist_detail_state.dart       # Initial | Loading | Loaded | Error
+│   │       └── pages/
+│   │           └── checklist_detail_page.dart        # tela de detalhe do histórico
+│   ├── history/
+│   │   ├── data/   (models, datasources, repositories)
+│   │   ├── domain/ (entities, repositories)
+│   │   └── presentation/ (cubit)
 │   ├── machines/
 │   │   ├── data/   (models, datasources, repositories)
 │   │   ├── domain/ (entities, repositories)
-│   │   └── presentation/ (cubit, pages, widgets)
+│   │   └── presentation/ (cubit)
 │   └── operators/
 │       ├── data/
 │       ├── domain/
@@ -214,18 +244,37 @@ AppLoadingOverlay.hide(context);
 
 ### Injeção de dependência
 
-Todos os serviços são registrados em `lib/core/injection.dart` e injetados via `get_it`:
+Todos os serviços são registrados em `lib/core/injection.dart` e injetados via `get_it`.
+
+**`registerLazySingleton`** — cria a instância uma única vez, na primeira chamada, e reutiliza para sempre. Usado para repositórios, datasources e cubits globais (ex.: `AuthCubit`, `HistoryCubit`).
+
+**`registerFactory`** — cria uma **nova instância a cada chamada**. Usado para cubits de tela específica que precisam de estado fresco a cada navegação, como `ChecklistDetailCubit`:
 
 ```dart
-// Registrar (injection.dart)
+// Singleton — compartilhado em todo o app
 getIt.registerLazySingleton<MachineRepository>(
   () => MachineRepositoryImpl(getIt()),
 );
 
-// Consumir (dentro do Cubit, no construtor)
-class MachineCubit extends Cubit<MachineState> {
-  final MachineRepository _repo = getIt<MachineRepository>();
-}
+// Factory — nova instância a cada vez que a rota é aberta
+getIt.registerFactory<ChecklistDetailCubit>(
+  () => ChecklistDetailCubit(getIt<ChecklistRepository>()),
+);
+```
+
+Na rota de detalhe, o `BlocProvider` cria o cubit e já dispara o carregamento:
+
+```dart
+GoRoute(
+  path: '/checklist/detalhe/:id',
+  builder: (context, state) {
+    final id = int.parse(state.pathParameters['id']!);
+    return BlocProvider(
+      create: (_) => getIt<ChecklistDetailCubit>()..fetchById(id),
+      child: const ChecklistDetailPage(),
+    );
+  },
+),
 ```
 
 ---
@@ -428,15 +477,16 @@ A API REST é construída em **Express.js + Supabase** e hospedada no **Render.c
 
 ### Endpoints principais
 
-| Método | Rota | Autenticação | Descrição |
-|--------|------|-------------|-----------|
-| `POST` | `/api/auth/login` | Pública | Autenticação por operadorId + PIN, retorna JWT |
-| `GET` | `/api/operators` | Bearer JWT | Lista operadores ativos |
-| `GET` | `/api/machines` | Bearer JWT | Lista máquinas ativas |
-| `GET` | `/api/checklist/items` | Bearer JWT | Itens do checklist por categoria |
-| `POST` | `/api/checklist/submit` | Bearer JWT | Envia respostas do checklist |
-
-O token JWT é armazenado com segurança usando `flutter_secure_storage` e injetado automaticamente em todas as requisições pelo `AuthInterceptor` do Dio.
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `POST` | `/auth/login` | Autenticação por `id_operador` + `pin` (inteiro) |
+| `GET` | `/operadores` | Lista operadores ativos |
+| `GET` | `/maquinas` | Lista máquinas ativas |
+| `GET` | `/itens` | Itens do checklist com categoria |
+| `POST` | `/checklists` | Cria cabeçalho do checklist; retorna `id_checklist` |
+| `POST` | `/checklists/:id/respostas` | Salva respostas do checklist |
+| `GET` | `/checklists` | Histórico de checklists (filtro por `operador_id`) |
+| `GET` | `/checklists/:id` | Detalhes completos de um checklist com todas as respostas |
 
 ---
 
@@ -445,10 +495,37 @@ O token JWT é armazenado com segurança usando `flutter_secure_storage` e injet
 | Nome | Hex | Uso |
 |------|-----|-----|
 | `AppColors.primary` | `#1B4332` | Cor principal — verde escuro floresta |
-| `AppColors.secondary` | `#8DC63F` | Destaque e seleção — verde limão |
+| `AppColors.secondary` | `#8DC63F` | Verde limão — uso geral de destaque |
 | Background | Gradiente `#C8E6C9` → `#FFFFFF` | Fundo de todas as telas |
 | Botão desabilitado | `#000000` com 60% de opacidade | Estado inativo do `AppButton` |
-| Cancelar | `#F28B82` | Botão de ação destrutiva/cancelamento |
+| Cancelar / Voltar | `#F28B82` | Botão de ação destrutiva ou retorno |
+| Seleção nas listas | `#FFFFFF` (branco) | Item selecionado em Operador, Máquina e histórico |
+
+#### Padrão de seleção em listas
+
+Itens selecionados nas listas (Operador, Máquina) recebem fundo branco com bordas arredondadas e uma pequena margem lateral, evitando que o destaque ultrapasse as bordas arredondadas do container pai:
+
+```dart
+Container(
+  margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+  decoration: BoxDecoration(
+    color: isSelected ? Colors.white : Colors.transparent,
+    borderRadius: BorderRadius.circular(12),
+  ),
+  child: OperatorCard(...),
+)
+```
+
+Na lista de histórico (checklist feitos), o feedback de toque usa splash e highlight brancos no `InkWell` do `ActivityTile`:
+
+```dart
+InkWell(
+  onTap: onTap,
+  splashColor: Colors.white38,
+  highlightColor: Colors.white24,
+  child: ...,
+)
+```
 
 ---
 
